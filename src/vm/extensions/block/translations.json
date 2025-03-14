@@ -1,0 +1,14 @@
+{
+  "en": {
+    "xcxTFKNN.name": "TF KNN",
+    "xcxTFKNN.doIt": "do it [SCRIPT]"
+  },
+  "ja": {
+    "xcxTFKNN.name": "TF KNN",
+    "xcxTFKNN.doIt": "[SCRIPT] を実行する"
+  },
+  "ja-Hira": {
+    "xcxTFKNN.name": "TF KNN",
+    "xcxTFKNN.doIt": "[SCRIPT] をじっこうする"
+  }
+}

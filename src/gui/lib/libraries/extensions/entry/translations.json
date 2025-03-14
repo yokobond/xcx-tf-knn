@@ -1,0 +1,14 @@
+{
+  "en": {
+    "xcxTFKNN.entry.name": "TF KNN",
+    "xcxTFKNN.entry.description": "Description of this extension"
+  },
+  "ja": {
+    "xcxTFKNN.entry.name": "TF KNN",
+    "xcxTFKNN.entry.description": "拡張機能の説明"
+  },
+  "ja-Hira": {
+    "xcxTFKNN.entry.name": "TF KNN",
+    "xcxTFKNN.entry.description": "かくちょうきのうのせつめい"
+  }
+}
