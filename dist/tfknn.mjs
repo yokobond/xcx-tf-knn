@@ -80,6 +80,16 @@ var entry = {
   translationMap: translations$1
 };
 
+function _typeof$2(o) {
+  "@babel/helpers - typeof";
+
+  return _typeof$2 = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) {
+    return typeof o;
+  } : function (o) {
+    return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o;
+  }, _typeof$2(o);
+}
+
 function _arrayWithHoles(r) {
   if (Array.isArray(r)) return r;
 }
@@ -136,16 +146,6 @@ function _slicedToArray(r, e) {
 
 function _classCallCheck$1(a, n) {
   if (!(a instanceof n)) throw new TypeError("Cannot call a class as a function");
-}
-
-function _typeof$2(o) {
-  "@babel/helpers - typeof";
-
-  return _typeof$2 = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) {
-    return typeof o;
-  } : function (o) {
-    return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o;
-  }, _typeof$2(o);
 }
 
 function toPrimitive$1(t, r) {
@@ -874,6 +874,7 @@ var en = {
 	"tfknn.clearExamples.defaultLabel": "label 1",
 	"tfknn.sizeOfAnExample": "size of an example",
 	"tfknn.dataFromList": "KNN data from [LIST_NAME]",
+	"tfknn.loadDatasetFromList": "load dataset from [LIST_NAME]",
 	"tfknn.getListMenu.defaultListName": "list name",
 	"tfknn.predictClass": "predict [DATA] with [K] nearest neighbors",
 	"tfknn.label": "label",
@@ -882,11 +883,7 @@ var en = {
 	"tfknn.labelAt": "label at [INDEX]",
 	"tfknn.sizeOfLabels": "size of labels",
 	"tfknn.sizeOfExamples": "size of example for [LABEL]",
-	"tfknn.sizeOfExamples.defaultLabel": "label 1",
-	"tfknn.storeDatasetInList": "store dataset in list",
-	"tfknn.saveDataset": "save dataset",
-	"tfknn.loadDataset": "load dataset",
-	"tfknn.saveDataset.prompt": "Enter a filename to save the dataset as:"
+	"tfknn.sizeOfExamples.defaultLabel": "label 1"
 };
 var ja = {
 	"tfknn.name": "KNN",
@@ -896,6 +893,7 @@ var ja = {
 	"tfknn.clearExamples.defaultLabel": "ラベル 1",
 	"tfknn.sizeOfAnExample": "例のデータサイズ",
 	"tfknn.dataFromList": "[LIST_NAME] をKNNデータにする",
+	"tfknn.loadDatasetFromList": "[LIST_NAME] からデータセットを読み込む",
 	"tfknn.getListMenu.defaultListName": "リスト名",
 	"tfknn.predictClass": "[DATA] を [K] 個の近い例で推測",
 	"tfknn.label": "ラベル",
@@ -904,11 +902,7 @@ var ja = {
 	"tfknn.labelAt": "[INDEX] 番目のラベル",
 	"tfknn.sizeOfLabels": "ラベルの数",
 	"tfknn.sizeOfExamples": "[LABEL] の例の数",
-	"tfknn.sizeOfExamples.defaultLabel": "ラベル 1",
-	"tfknn.storeDatasetInList": "データセットをリストに保存",
-	"tfknn.saveDataset": "データセットを保存",
-	"tfknn.loadDataset": "データセットを読み込み",
-	"tfknn.saveDataset.prompt": "データセットを保存するファイル名を入力してください："
+	"tfknn.sizeOfExamples.defaultLabel": "ラベル 1"
 };
 var translations = {
 	en: en,
@@ -921,6 +915,7 @@ var translations = {
 	"tfknn.clearExamples.defaultLabel": "ラベル 1",
 	"tfknn.sizeOfAnExample": "れい の さいず",
 	"tfknn.dataFromList": "[LIST_NAME] を KNNデータ に する",
+	"tfknn.loadDatasetFromList": "[LIST_NAME] から データセット を よみこむ",
 	"tfknn.getListMenu.defaultListName": "リストめい",
 	"tfknn.predictClass": "[DATA] を [K] こ の ちかい れい で すいそく",
 	"tfknn.label": "ラベル",
@@ -929,11 +924,7 @@ var translations = {
 	"tfknn.labelAt": "[INDEX] ばんめ の ラベル",
 	"tfknn.sizeOfLabels": "ラベル の かず",
 	"tfknn.sizeOfExamples": "[LABEL] の れい の かず",
-	"tfknn.sizeOfExamples.defaultLabel": "ラベル 1",
-	"tfknn.storeDatasetInList": "データセット を リスト に ほぞん",
-	"tfknn.saveDataset": "データセット を ほぞん",
-	"tfknn.loadDataset": "データセット を よみこみ",
-	"tfknn.saveDataset.prompt": "データセット を ほぞん する ファイルめい を にゅうりょく してください："
+	"tfknn.sizeOfExamples.defaultLabel": "ラベル 1"
 }
 };
 
@@ -975,7 +966,7 @@ var parseNumbers = function parseNumbers(str) {
 /**
  * Returns a numeric Array made from the string expression.
  * @param {string} input - string to be converted
- * @returns {Array<number>|Array<Array<number>>} numeric array from the string
+ * @returns {Array<number>|number|null} numeric array from the string
  */
 var readAsNumericArray = function readAsNumericArray(input) {
   // if the input is not a string, simply convert it to a number
@@ -87987,6 +87978,11 @@ function create() {
   return new KNNClassifier$1();
 }
 
+/**
+ * A K-Nearest Neighbors (KNN) classifier using TensorFlow.js.
+ * This class wraps the knnClassifier from @tensorflow-models/knn-classifier
+ * and provides methods to add examples, classify inputs, and manage the dataset.
+ */
 var KNNClassifier = /*#__PURE__*/function () {
   function KNNClassifier() {
     _classCallCheck$1(this, KNNClassifier);
@@ -88001,6 +87997,12 @@ var KNNClassifier = /*#__PURE__*/function () {
      */
     this.lastPrediction = null;
   }
+
+  /**
+   * Add an example to the classifier.
+   * @param {string|number} label - The class label for the example.
+   * @param {Array|TypedArray|Tensor} data - The example data.
+   */
   return _createClass$1(KNNClassifier, [{
     key: "addExample",
     value: function addExample(label, data) {
@@ -88011,6 +88013,11 @@ var KNNClassifier = /*#__PURE__*/function () {
       this._classifier.addExample(tensor$1, label);
       tensor$1.dispose();
     }
+
+    /**
+     * Get the number of examples for each class.
+     * @returns {object} - A dictionary of label -> number of examples.
+     */
   }, {
     key: "getClassExampleCount",
     value: function getClassExampleCount() {
@@ -88043,6 +88050,12 @@ var KNNClassifier = /*#__PURE__*/function () {
         return [label, Array.from(data.dataSync()), data.shape];
       });
     }
+
+    /**
+     * Load the classifier dataset from an array of tuples.
+     * Each tuple should contain a label, data array, and shape.
+     * @param {Array} datasetObj - An array of tuples to load.
+     */
   }, {
     key: "loadDataset",
     value: function loadDataset(datasetObj) {
@@ -88059,14 +88072,41 @@ var KNNClassifier = /*#__PURE__*/function () {
       this._classifier = create();
       this._classifier.setClassifierDataset(dataset);
     }
+
+    /**
+     * Get the number of classes in the classifier.
+     * @returns {number} - The number of classes.
+     */
   }, {
     key: "getNumClasses",
     value: function getNumClasses() {
       return this._classifier.getNumClasses();
     }
+
+    /**
+     * Get the size of an example (number of features).
+     * Assumes all examples have the same size.
+     * @returns {number} - The size of an example, or 0 if no classes exist.
+     */
+  }, {
+    key: "sizeOfAnExample",
+    value: function sizeOfAnExample() {
+      if (this._classifier.getNumClasses() > 0) {
+        var dataset = this._classifier.getClassifierDataset();
+        return Object.values(dataset)[0].shape[1];
+      }
+      return 0;
+    }
+
+    /**
+     * Classify an input tensor.
+     * @param {Tensor} data - The input tensor to classify.
+     * @param {number} k - The number of nearest neighbors to consider.
+     * @returns {Promise} - A promise that resolves to the classification result.
+     */
   }, {
     key: "classify",
-    value: function () {
+    value: (function () {
       var _classify = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime.mark(function _callee(data, k) {
         var tensor$1, result;
         return _regeneratorRuntime.wrap(function _callee$(_context) {
@@ -88091,11 +88131,20 @@ var KNNClassifier = /*#__PURE__*/function () {
       }
       return classify;
     }()
+    /**
+     * Clear all examples for a specific class label.
+     * @param {string|number} label - The class label to clear.
+     */
+    )
   }, {
     key: "clearClass",
     value: function clearClass(label) {
       this._classifier.clearClass(label);
     }
+
+    /**
+     * Clear all classes and examples from the classifier.
+     */
   }, {
     key: "clearAll",
     value: function clearAll() {
@@ -88175,7 +88224,7 @@ var ExtensionBlocks = /*#__PURE__*/function () {
     runtime.on('PROJECT_LOADED', function () {
       // Load the dataset from the list variable
       runtime.targets.forEach(function (target) {
-        _this.initializeDataset(target);
+        _this.initializeDatasetFromTarget(target);
       });
     });
   }
@@ -88251,6 +88300,20 @@ var ExtensionBlocks = /*#__PURE__*/function () {
             LIST_NAME: {
               type: ArgumentType.STRING,
               menu: 'listMenu'
+            }
+          }
+        }, {
+          opcode: 'loadDatasetFromList',
+          blockType: BlockType.COMMAND,
+          text: formatMessage({
+            id: 'tfknn.loadDatasetFromList',
+            default: 'load dataset from [LIST_NAME]'
+          }),
+          arguments: {
+            LIST_NAME: {
+              type: ArgumentType.STRING,
+              menu: 'listMenu',
+              defaultValue: this.DATASET_LIST_NAME
             }
           }
         }, '---', {
@@ -88332,27 +88395,6 @@ var ExtensionBlocks = /*#__PURE__*/function () {
               })
             }
           }
-        }, '---', {
-          opcode: 'storeDatasetInList',
-          blockType: BlockType.COMMAND,
-          text: formatMessage({
-            id: 'tfknn.storeDatasetInList',
-            default: 'store dataset in list'
-          })
-        }, {
-          opcode: 'saveDataset',
-          blockType: BlockType.COMMAND,
-          text: formatMessage({
-            id: 'tfknn.saveDataset',
-            default: 'save dataset'
-          })
-        }, {
-          opcode: 'loadDataset',
-          blockType: BlockType.COMMAND,
-          text: formatMessage({
-            id: 'tfknn.loadDataset',
-            default: 'load dataset'
-          })
         }],
         menus: {
           listMenu: {
@@ -88506,11 +88548,7 @@ var ExtensionBlocks = /*#__PURE__*/function () {
     value: function sizeOfAnExample(args, util) {
       var target = util.target;
       var classifier = this._getClassifierFor(target);
-      if (classifier.getNumClasses() > 0) {
-        var dataset = classifier.getClassifierDataset();
-        return Object.values(dataset)[0].shape[1];
-      }
-      return 0;
+      return classifier.sizeOfAnExample();
     }
 
     /**
@@ -88713,37 +88751,88 @@ var ExtensionBlocks = /*#__PURE__*/function () {
     /**
      * Initialize the dataset from the list of the target.
      * @param {!Target} target - the target
-     * @returns {Array} - the loaded dataset.
      */
   }, {
-    key: "initializeDataset",
-    value: function initializeDataset(target) {
-      var classifier = this._getClassifierFor(target);
+    key: "initializeDatasetFromTarget",
+    value: function initializeDatasetFromTarget(target) {
       var list = target.lookupVariableByNameAndType(this.DATASET_LIST_NAME, 'list');
-      if (!list || list.value.length === 0) {
-        // If the list is empty, clear the classifier
-        classifier.clearAll();
-        return [];
+      if (!list) {
+        return;
       }
-      var dataset = list.value.map(function (item) {
-        return JSON.parse(item.replaceAll(/ /g, ','));
+      var dataset = [];
+      list.value.forEach(function (item) {
+        try {
+          var data = JSON.parse(item.replaceAll(/ /g, ','));
+          if (!Array.isArray(data) || data.length !== 3 || typeof data[0] !== 'string' || !Array.isArray(data[1]) || !Array.isArray(data[2]) || data[2].length !== 2) {
+            // If the dataset is invalid as a KNN dataset, ignore it.
+            return;
+          }
+          dataset.push(data);
+        } catch (error) {
+          // Ignore invalid JSON entries
+          console.warn('Invalid dataset entry:', item, error);
+        }
       });
-      classifier.loadDataset(dataset);
+      if (dataset.length === 0) {
+        // If no valid dataset entries, do nothing.
+        return;
+      }
+      this._getClassifierFor(target).loadDataset(dataset);
+    }
+
+    /**
+     * Get the dataset from a list variable or a string expression of an Array.
+     * @param {Target} target - the target
+     * @param {string} listNameOrArrayString - the list name or the string expression of an Array.
+     * @param {boolean} transpose - whether to transpose the matrix.
+     * @return {Array<Array>} - the loaded dataset.
+     */
+  }, {
+    key: "_getDatasetFromTarget",
+    value: function _getDatasetFromTarget(target, listNameOrArrayString) {
+      var list = target.lookupVariableByNameAndType(listNameOrArrayString, 'list');
+      var dataset = [];
+      if (!list) {
+        return dataset;
+      }
+      list.value.forEach(function (item) {
+        var data = JSON.parse(item.replaceAll(/ /g, ','));
+        if (!Array.isArray(data) || data.length !== 3 || typeof data[0] !== 'string' || !Array.isArray(data[1]) || !Array.isArray(data[2]) || data[2].length !== 2) {
+          // If the dataset is invalid as a KNN dataset, ignore it.
+          return;
+        }
+        dataset.push(data);
+      });
       return dataset;
     }
 
     /**
-     * Store the dataset in a list variable.
-     * @param {object} _args - the block arguments.
+     * Load the dataset from a list variable or a string expression of an Array.
+     * @param {object} args - the block arguments.
+     * @param {string} args.LIST_NAME - the list name or the string expression of an Array.
      * @param {object} util - the block utility object.
      * @param {Target} util.target - the target
      * @returns {string} - a status message.
      */
   }, {
-    key: "storeDatasetInList",
-    value: function storeDatasetInList(_args, util) {
-      this._storeDataset(util.target);
-      return "Stored dataset in list \"".concat(this.DATASET_LIST_NAME, "\"");
+    key: "loadDatasetFromList",
+    value: function loadDatasetFromList(args, util) {
+      var target = util.target;
+      var classifier = this._getClassifierFor(target);
+      var listNameOrArrayString = Cast$1.toString(args.LIST_NAME);
+      var dataset = this._getDatasetFromTarget(target, listNameOrArrayString);
+      if (dataset.length === 0) {
+        classifier.clearAll();
+        return 'No data found';
+      }
+      try {
+        classifier.loadDataset(dataset);
+        this._storeDataset(target);
+        return "Loaded dataset with ".concat(classifier.getNumClasses(), " classes");
+      } catch (error) {
+        console.warn('Failed to load dataset:', error);
+        return "Failed to load dataset: ".concat(error);
+      }
     }
 
     /**
@@ -88752,10 +88841,11 @@ var ExtensionBlocks = /*#__PURE__*/function () {
      * @param {object} util - the block utility object.
      * @param {Target} util.target - the target
      * @returns {Promise} - a promise that resolves with a status
+     * @deprecated
      */
   }, {
-    key: "saveDataset",
-    value: function saveDataset(args, util) {
+    key: "saveDatasetOnFile",
+    value: function saveDatasetOnFile(args, util) {
       var target = util.target;
       var classifier = this._getClassifierFor(target);
       return new Promise(function (resolve) {
@@ -88766,7 +88856,7 @@ var ExtensionBlocks = /*#__PURE__*/function () {
           var defaultFilename = 'knn-dataset.json';
           // eslint-disable-next-line no-alert
           var filename = prompt(formatMessage({
-            id: 'tfknn.saveDataset.prompt',
+            id: 'tfknn.saveDatasetOnFile.prompt',
             default: 'Enter a filename to save the dataset as:'
           }), defaultFilename) || defaultFilename;
 
@@ -88800,10 +88890,11 @@ var ExtensionBlocks = /*#__PURE__*/function () {
      * @param {object} util - the block utility object.
      * @param {Target} util.target - the target
      * @returns {Promise} - a promise that resolves with a status
+     * @deprecated
      */
   }, {
-    key: "loadDataset",
-    value: function loadDataset(args, util) {
+    key: "loadDatasetFromFile",
+    value: function loadDatasetFromFile(args, util) {
       var target = util.target;
       var classifier = this._getClassifierFor(target);
       return new Promise(function (resolve) {
@@ -88843,23 +88934,19 @@ var ExtensionBlocks = /*#__PURE__*/function () {
       var target = util.target;
       var listNameOrArrayString = args.LIST_NAME;
       var list = target.lookupVariableByNameAndType(listNameOrArrayString, 'list');
-      var matrix;
+      var data;
       if (list) {
-        matrix = _getMatrixFromList(listNameOrArrayString, target);
+        data = _getMatrixFromList(listNameOrArrayString, target);
       } else {
-        matrix = readAsNumericArray(listNameOrArrayString);
+        data = readAsNumericArray(listNameOrArrayString);
       }
-      if (args.TRANSPOSE === 'transpose') {
-        if (matrix.length === 0) return JSON.stringify(matrix);
-        if (!Array.isArray(matrix[0])) return JSON.stringify(matrix);
-        var transposed = matrix[0].map(function (col, i) {
-          return matrix.map(function (row) {
-            return row[i];
-          });
-        });
-        return JSON.stringify(transposed);
+      if (_typeof$2(data) === "undefined") {
+        data = [];
       }
-      return JSON.stringify(matrix);
+      if (typeof data === 'number') {
+        data = [data];
+      }
+      return JSON.stringify(data);
     }
   }], [{
     key: "formatMessage",
