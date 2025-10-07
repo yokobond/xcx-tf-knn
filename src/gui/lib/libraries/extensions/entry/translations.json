@@ -1,14 +1,14 @@
 {
   "en": {
-    "xcxTFKNN.entry.name": "TF KNN",
-    "xcxTFKNN.entry.description": "Description of this extension"
+    "tfknn.entry.name": "TensorFlow KNN",
+    "tfknn.entry.description": "It provides a KNN (K-Nearest Neighbors) classifier using TensorFlow.js."
   },
   "ja": {
-    "xcxTFKNN.entry.name": "TF KNN",
-    "xcxTFKNN.entry.description": "拡張機能の説明"
+    "tfknn.entry.name": "TensorFlow KNN",
+    "tfknn.entry.description": "TensorFlow.jsを使用したKNN（K-Nearest Neighbors）分類器を使えます。"
   },
   "ja-Hira": {
-    "xcxTFKNN.entry.name": "TF KNN",
-    "xcxTFKNN.entry.description": "かくちょうきのうのせつめい"
+    "tfknn.entry.name": "TensorFlow KNN",
+    "tfknn.entry.description": "TensorFlow.js の KNN（K-Nearest Neighbors）ぶんるいき を つかえ ます。"
   }
 }

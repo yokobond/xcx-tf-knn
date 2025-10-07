@@ -1,14 +1,59 @@
 {
   "en": {
-    "xcxTFKNN.name": "TF KNN",
-    "xcxTFKNN.doIt": "do it [SCRIPT]"
+    "tfknn.name": "KNN",
+    "tfknn.addExample": "add example [DATA] with label [LABEL]",
+    "tfknn.addExample.defaultLabel": "label 1",
+    "tfknn.clearExamples": "clear examples for [LABEL]",
+    "tfknn.clearExamples.defaultLabel": "label 1",
+    "tfknn.sizeOfAnExample": "size of an example",
+    "tfknn.dataFromList": "KNN data from [LIST_NAME]",
+    "tfknn.loadDatasetFromList": "load dataset from [LIST_NAME]",
+    "tfknn.getListMenu.defaultListName": "list name",
+    "tfknn.predictClass": "predict [DATA] with [K] nearest neighbors",
+    "tfknn.label": "label",
+    "tfknn.confidence": "confidence of [LABEL]",
+    "tfknn.confidence.defaultLabel": "label 1",
+    "tfknn.labelAt": "label at [INDEX]",
+    "tfknn.sizeOfLabels": "size of labels",
+    "tfknn.sizeOfExamples": "size of example for [LABEL]",
+    "tfknn.sizeOfExamples.defaultLabel": "label 1"
   },
   "ja": {
-    "xcxTFKNN.name": "TF KNN",
-    "xcxTFKNN.doIt": "[SCRIPT] を実行する"
+    "tfknn.name": "KNN",
+    "tfknn.addExample": "例 [DATA] を [LABEL] に追加",
+    "tfknn.addExample.defaultLabel": "ラベル 1",
+    "tfknn.clearExamples": "[LABEL] の例を削除",
+    "tfknn.clearExamples.defaultLabel": "ラベル 1",
+    "tfknn.sizeOfAnExample": "例のデータサイズ",
+    "tfknn.dataFromList": "[LIST_NAME] をKNNデータにする",
+    "tfknn.loadDatasetFromList": "[LIST_NAME] からデータセットを読み込む",
+    "tfknn.getListMenu.defaultListName": "リスト名",
+    "tfknn.predictClass": "[DATA] を [K] 個の近い例で推測",
+    "tfknn.label": "ラベル",
+    "tfknn.confidence": "[LABEL] の信頼度",
+    "tfknn.confidence.defaultLabel": "ラベル 1",
+    "tfknn.labelAt": "[INDEX] 番目のラベル",
+    "tfknn.sizeOfLabels": "ラベルの数",
+    "tfknn.sizeOfExamples": "[LABEL] の例の数",
+    "tfknn.sizeOfExamples.defaultLabel": "ラベル 1"
   },
   "ja-Hira": {
-    "xcxTFKNN.name": "TF KNN",
-    "xcxTFKNN.doIt": "[SCRIPT] をじっこうする"
+    "tfknn.name": "KNN",
+    "tfknn.addExample": "れい [DATA] を [LABEL] に くわえる",
+    "tfknn.addExample.defaultLabel": "ラベル 1",
+    "tfknn.clearExamples": "ラベル [LABEL] の れい を けす",
+    "tfknn.clearExamples.defaultLabel": "ラベル 1",
+    "tfknn.sizeOfAnExample": "れい の さいず",
+    "tfknn.dataFromList": "[LIST_NAME] を KNNデータ に する",
+    "tfknn.loadDatasetFromList": "[LIST_NAME] から データセット を よみこむ",
+    "tfknn.getListMenu.defaultListName": "リストめい",
+    "tfknn.predictClass": "[DATA] を [K] こ の ちかい れい で すいそく",
+    "tfknn.label": "ラベル",
+    "tfknn.confidence": "[LABEL] の しんらいど",
+    "tfknn.confidence.defaultLabel": "ラベル 1",
+    "tfknn.labelAt": "[INDEX] ばんめ の ラベル",
+    "tfknn.sizeOfLabels": "ラベル の かず",
+    "tfknn.sizeOfExamples": "[LABEL] の れい の かず",
+    "tfknn.sizeOfExamples.defaultLabel": "ラベル 1"
   }
 }

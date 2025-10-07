@@ -16,13 +16,14 @@ const blockFile = path.resolve(blockSrcDir, 'index.js');
 const entrySrcDir = path.resolve(process.cwd(), './src/gui/lib/libraries/extensions/entry');
 const entryFile = path.resolve(entrySrcDir, 'index.jsx');
 // path for output
-const moduleName = 'xcxTFKNN';
+const moduleName = 'tfknn';
 const outputDir = path.resolve(process.cwd(), './dist');
 fs.emptyDirSync(outputDir);
 const moduleFile = path.resolve(outputDir, `${moduleName}.mjs`);
 
 const rollupOptions = {
     input: [entryFile, blockFile],
+    context: 'window',
     plugins: [
         multi(),
         importImage(),

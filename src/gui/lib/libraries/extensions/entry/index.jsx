@@ -17,13 +17,13 @@ let formatMessage = messageData => messageData.defaultMessage;
 const entry = {
     get name () {
         return formatMessage({
-            id: 'xcxTFKNN.entry.name',
+            id: 'tfknn.entry.name',
             defaultMessage: 'TF KNN',
             description: 'name of the extension'
         });
     },
-    extensionId: 'xcxTFKNN',
-    extensionURL: 'https://yokobond.github.io/xcx-tf-knn/dist/xcxTFKNN.mjs',
+    extensionId: 'tfknn',
+    extensionURL: 'https://yokobond.github.io/xcx-tf-knn/dist/tfknn.mjs',
     collaborator: 'yokobond',
     iconURL: iconURL,
     insetIconURL: insetIconURL,
@@ -31,10 +31,10 @@ const entry = {
         return formatMessage({
             defaultMessage: 'an extension for Xcratch',
             description: 'Description for this extension',
-            id: 'xcxTFKNN.entry.description'
+            id: 'tfknn.entry.description'
         });
     },
-    tags: [],
+    tags: ['ai', 'machine learning', 'ml', 'tensorflow', 'classification'],
     featured: true,
     disabled: false,
     bluetoothRequired: false,
