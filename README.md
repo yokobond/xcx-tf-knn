@@ -16,12 +16,17 @@ This extension allows you to train a KNN model by adding examples with labels an
 
 Play the [Example Project](https://xcratch.github.io/editor/#https://yokobond.github.io/xcx-tf-knn/projects/example.sb3) to see the "TF KNN" extension in action.
 
-In this example, sample points are scattered across the four quadrants of the stage. The KNN classifier is trained with these points and their corresponding quadrant labels. The cat sprite's position is then predicted to determine which quadrant it belongs to using the trained KNN model.
+In this example, sample points are scattered across the four quadrants of the stage. The KNN classifier is trained with these points and their corresponding quadrant labels. The cat sprite's position is then predicted to determine which quadrant it belongs to using the trained KNN model. The cat's size changes based on the confidence level of the prediction.
 
 <iframe src="https://xcratch.github.io/editor/player#https://yokobond.github.io/xcx-tf-knn/projects/example.sb3" width="540px" height="460px"></iframe>
 
 ### Advanced Example
 [rock-paper-scissors project](https://xcratch.github.io/editor/#https://yokobond.github.io/xcx-tf-knn/projects/rock-paper-scissors.sb3) uses the KNN classifier to recognize hand gestures (rock, paper, scissors) based on pre-extracted features. The features are extracted using the [MediaPipe Hand Detection Extension for Xcratch \| xcx\-mp\-hand](https://yokobond.github.io/xcx-mp-hand/).
+
+In this project:
+- Press the **Space key** to predict the current hand gesture
+- The model is pre-trained with right hand gestures
+- Press **1**, **2**, or **3** keys to add training examples for paper, rock, or scissors respectively
 
 ## Blocks
 
