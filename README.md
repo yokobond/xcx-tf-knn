@@ -12,14 +12,27 @@ This extension allows you to train a KNN model by adding examples with labels an
 *   **Persist the Model:** Save the trained dataset to a Scratch list (`KNN Dataset`) or download it as a file, and load it back later.
 *   **Integrate with Lists:** Easily use data directly from Scratch lists as input for examples or predictions.
 
+### Example Project
+
 Play the [Example Project](https://xcratch.github.io/editor/#https://yokobond.github.io/xcx-tf-knn/projects/example.sb3) to see the "TF KNN" extension in action.
+
+In this example, sample points are scattered across the four quadrants of the stage. The KNN classifier is trained with these points and their corresponding quadrant labels. The cat sprite's position is then predicted to determine which quadrant it belongs to using the trained KNN model. The cat's size changes based on the confidence level of the prediction.
+
 <iframe src="https://xcratch.github.io/editor/player#https://yokobond.github.io/xcx-tf-knn/projects/example.sb3" width="540px" height="460px"></iframe>
+
+### Advanced Example
+[rock-paper-scissors project](https://xcratch.github.io/editor/#https://yokobond.github.io/xcx-tf-knn/projects/rock-paper-scissors.sb3) uses the KNN classifier to recognize hand gestures (rock, paper, scissors) based on pre-extracted features. The features are extracted using the [MediaPipe Hand Detection Extension for Xcratch \| xcx\-mp\-hand](https://yokobond.github.io/xcx-mp-hand/).
+
+In this project:
+- Press the **Space key** to predict the current hand gesture
+- The model is pre-trained with right hand gestures
+- Press **1**, **2**, or **3** keys to add training examples for paper, rock, or scissors respectively
 
 ## Blocks
 
 ### Training Blocks
 
-*   `add example [DATA] with label [LABEL]`: Adds a data example (string of numbers or array) to the classifier under the specified label. The data will be automatically stored in the "KNN Dataset" list.
+*   `add example [DATA] with label [LABEL]`: Adds a data example (string of numbers or array) to the classifier under the specified label. The data will be automatically stored in the `KNN Dataset` list.
 *   `clear examples for [LABEL]`: Removes all examples associated with the specified label from the classifier.
 
 ### Data Blocks
@@ -31,7 +44,7 @@ Play the [Example Project](https://xcratch.github.io/editor/#https://yokobond.gi
 
 *   `predict [DATA] with [K] nearest neighbors`: Classifies the given data using the specified number of neighbors (K) and updates the prediction results. Returns a status message with the predicted label and confidence.
 *   `label`: Reports the most likely label from the last prediction. Returns a space character if no prediction has been made yet.
-*   `confidence of [LABEL]`: Reports the confidence score (0-1) for the specified label from the last prediction. Returns 0 if the label doesn't exist or no prediction has been made.
+*   `confidence of [LABEL]`: Reports the confidence score (0.0-1.0) for the specified label from the last prediction. Returns 0 if the label doesn't exist or no prediction has been made.
 
 ### Information Blocks
 
@@ -41,9 +54,8 @@ Play the [Example Project](https://xcratch.github.io/editor/#https://yokobond.gi
 
 ### Dataset Management Blocks
 
-*   `store dataset in list`: Saves the current classifier dataset into a list named "KNN Dataset" in the current sprite. This list is automatically loaded when the project starts.
-*   `save dataset`: Downloads the current classifier dataset as a JSON file. Prompts for a filename and automatically adds `.json` extension if not provided.
-*   `load dataset`: Opens a file dialog to load a previously saved classifier dataset from a JSON file. The dataset will be loaded into the classifier and can be used immediately.
+*   `KNN Dataset`: A list that automatically stores the current classifier dataset. This list is created in the current sprite and is loaded automatically when the project starts. 
+*   `load dataset from [LIST_NAME]`: Loads a classifier dataset from a specified Scratch list. The list should contain the dataset in JSON format, as `KNN Dataset` does when saved.
 
 ## How to Use in Xcratch
 
