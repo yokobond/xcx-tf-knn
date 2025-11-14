@@ -5,6 +5,9 @@
 import iconURL from './entry-icon.png';
 import insetIconURL from './inset-icon.svg';
 import translations from './translations.json';
+import {version as packageVersion} from '../../../../../../package.json';
+
+const version = `v${packageVersion}`;
 
 /**
  * Formatter to translate the messages in this extension.
@@ -24,15 +27,15 @@ const entry = {
     },
     extensionId: 'tfknn',
     extensionURL: 'https://yokobond.github.io/xcx-tf-knn/dist/tfknn.mjs',
-    collaborator: 'yokobond',
+    collaborator: 'Koji Yokokawa',
     iconURL: iconURL,
     insetIconURL: insetIconURL,
     get description () {
-        return formatMessage({
+        return `${formatMessage({
             defaultMessage: 'an extension for Xcratch',
             description: 'Description for this extension',
             id: 'tfknn.entry.description'
-        });
+        })} (${version})`;
     },
     tags: ['ai', 'machine learning', 'ml', 'tensorflow', 'classification'],
     featured: true,
