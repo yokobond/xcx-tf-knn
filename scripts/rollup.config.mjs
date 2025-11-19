@@ -26,70 +26,79 @@ const entrySrcDir = path.resolve(process.cwd(), './src/gui/lib/libraries/extensi
 const entryFile = path.resolve(entrySrcDir, 'index.jsx');
 // path for output
 const outputDir = path.resolve(process.cwd(), './dist');
-const moduleFile = path.resolve(outputDir, `${EXTENSION_ID}.mjs`);
+const entryModuleFile = path.resolve(outputDir, `${EXTENSION_ID}-entry.mjs`);
+const extensionModuleFile = path.resolve(outputDir, `${EXTENSION_ID}.mjs`);
 
-const rollupOptions = {
-    input: [entryFile, blockFile],
+const watchOptions = {
+    clearScreen: false,
+    chokidar: {
+        usePolling: true,
+    },
+    buildDelay: 500,
+};
+
+const createPlugins = () => [
+    importImage(),
+    commonjs(),
+    nodePolifills(),
+    nodeResolve({
+        browser: true,
+        preferBuiltins: false,
+        modulePaths: [
+            path.resolve(process.cwd(), './node_modules'),
+        ],
+        // Add these options to better resolve @babel/runtime
+        include: ['**'],
+        skip: [],
+    }),
+    json(),
+    babel({
+        babelrc: false,
+        exclude: ['node_modules/**'],
+        presets: [
+            ['@babel/preset-env',
+                {
+                    "modules": false,
+                    targets: {
+                        browsers: [
+                            'last 3 versions',
+                            'Safari >= 8',
+                            'iOS >= 8']
+                    }
+                }
+            ],
+            '@babel/preset-react'
+        ],
+        babelHelpers: 'runtime',
+        plugins: [
+            '@babel/plugin-transform-react-jsx',
+            [
+                "@babel/plugin-transform-runtime",
+                {
+                    "regenerator": true,
+                    "useESModules": true
+                }
+            ]
+        ],
+    }),
+];
+
+const createConfig = (input, outputFile, useMultiEntry = false) => ({
+    input,
     context: 'window',
-    plugins: [
-        multi(),
-        importImage(),
-        commonjs(),
-        nodePolifills(),
-        nodeResolve({
-            browser: true, 
-            preferBuiltins: false, 
-            modulePaths: [
-                path.resolve(process.cwd(), './node_modules'),
-            ],
-            // Add these options to better resolve @babel/runtime
-            include: ['**'],
-            skip: [],
-        }),
-        json(),
-        babel({
-            babelrc: false,
-            exclude: ['node_modules/**'],
-            presets: [
-                ['@babel/preset-env',
-                    {
-                        "modules": false,
-                        targets: {
-                            browsers: [
-                                'last 3 versions',
-                                'Safari >= 8',
-                                'iOS >= 8']
-                        }
-                    }
-                ],
-                '@babel/preset-react'
-            ],
-            babelHelpers: 'runtime',
-            plugins: [
-                '@babel/plugin-transform-react-jsx',
-                [
-                    "@babel/plugin-transform-runtime",
-                    { 
-                        "regenerator": true,
-                        "useESModules": true
-                    }
-                ]
-            ],
-        }),
-    ],
+    plugins: useMultiEntry ? [multi(), ...createPlugins()] : createPlugins(),
     output: {
-        file: moduleFile,
+        file: outputFile,
         format: 'es',
         sourcemap: true,
     },
-    watch: {
-        clearScreen: false,
-        chokidar: {
-            usePolling: true,
-        },
-        buildDelay: 500,
-    },
+    watch: watchOptions,
     external: [],
-}
+});
+
+const rollupOptions = [
+    createConfig(entryFile, entryModuleFile, false),
+    createConfig([entryFile, blockFile], extensionModuleFile, true)
+];
 
 export default rollupOptions;
