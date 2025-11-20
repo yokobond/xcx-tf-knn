@@ -34,7 +34,7 @@ var translations$1 = {
 }
 };
 
-var version$3 = "0.1.1";
+var version$3 = "0.1.0";
 
 /**
  * This is an extension for Xcratch.
