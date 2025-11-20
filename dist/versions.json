@@ -2,10 +2,15 @@
   "extensionId": "tfknn",
   "versions": [
     {
+      "version": "0.1.1",
+      "buildDate": "2025-11-20T22:35:24.214Z",
+      "module": "0.1.1/tfknn.mjs"
+    },
+    {
       "version": "0.1.0",
       "buildDate": "2025-11-14T12:08:02.680Z",
       "module": "0.1.0/tfknn.mjs"
     }
   ],
-  "latest": "0.1.0"
+  "latest": "0.1.1"
 }
